@@ -16,7 +16,6 @@ class GatherDetails(val ip: String) {
     var name: String? = null
     var titleID: String? = null
     var isRetroGame: Boolean = false
-    var firmwareVersion: String? = null
 
     private val client = HttpClient(CIO)
 

@@ -7,5 +7,5 @@ fun main(args: Array<String>) {
     val scanner = Scanner(System.`in`)
     print("Insert your PS3 ID: 192.168.")
     val ip = "192.168." + scanner.nextLine()
-    PS3InfoFetcher(ip).startLoop(30000)
+    PS3InfoFetcher(ip).startLoopWithDiscord(1376318626071576668L)
 }

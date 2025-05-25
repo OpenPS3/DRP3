@@ -1,59 +1,30 @@
-import net.ps3utils.discord.rpc.utils.GatherDetails
+import de.jcm.discordgamesdk.Core
+import de.jcm.discordgamesdk.CreateParams
+import net.ps3utils.discord.rpc.presence.DiscordUtils
+import net.ps3utils.discord.rpc.utils.LogUtils
+import net.ps3utils.discord.rpc.utils.WebmanUtils
+import kotlin.use
 
 class PS3InfoFetcher(private val ip: String) {
-    private val gatherDetails = GatherDetails(ip)
+    val webmanUtils = WebmanUtils(ip)
+    val logger = LogUtils(webmanUtils)
+    val presence = DiscordUtils(this)
 
-    var thermalData: String? = null
-        private set
-    var gameName: String? = null
-        private set
-    var titleID: String? = null
-        private set
-    var isRetroGame: Boolean = false
-        private set
+    var lastTitleID: String? = null
+    var lastActivity: String? = null
 
-    @Volatile
-    private var running = false
+    fun startLoopWithDiscord(clientId: Long) {
+        CreateParams().use { params ->
+            params.setClientID(clientId)
+            params.setFlags(CreateParams.getDefaultFlags())
+            Core(params).use { core ->
 
-    fun fetchDetails(): Boolean {
-        if (!gatherDetails.getHtml()) {
-            println("Can't get PS3 Home page, is WebmanMOD installed?")
-            return false
-        }
-
-        gatherDetails.getThermals()
-        gatherDetails.decideGameType()
-
-        thermalData = gatherDetails.thermalData
-        gameName = gatherDetails.name
-        titleID = gatherDetails.titleID
-        isRetroGame = gatherDetails.isRetroGame
-
-        return true
-    }
-
-    fun startLoop(intervalMillis: Long = 5000) {
-        if (running) {
-            println("Loop already running")
-            return
-        }
-        running = true
-
-        Thread {
-            while (running) {
-                val success = fetchDetails()
-                if (success) {
-                    println("\n")
-                    println("---------------------------")
-                    println("Temperatures: $thermalData")
-                    println("Game name: $gameName")
-                    println("Title ID: $titleID")
-                    println("Is Retro Game? $isRetroGame")
-                    println("---------------------------")
+                while (true) {
+                    presence.checkActivity(core)
+                    core.runCallbacks()
+                    Thread.sleep(20000)
                 }
-                Thread.sleep(intervalMillis)
             }
-        }.start()
+        }
     }
 }
-
