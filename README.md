@@ -4,6 +4,7 @@
 
 <h2 align="center">Show what you're playing on your PlayStation 3 on Discord</h2>
 <h3 align="center">⚠ This program still on beta!</h3>
+
 ## Requirements
 - PlayStation 3 on the same network
 - Firmware: HFW/HEN or CFW
