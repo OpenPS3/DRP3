@@ -32,9 +32,10 @@ jobs:
 
       - name: Package EXE with Launch4j
         shell: pwsh
-        run: launch4j config\launch4j.xml
+        run: & 'C:\ProgramData\chocolatey\bin\launch4j.exe' launch4j.xml
 
       - name: Prepare Release Assets
+        shell: pwsh
         run: |
           if (-Not (Test-Path release)) { New-Item -ItemType Directory -Path release }
           Move-Item build\libs\ps3rpc-1.0-SNAPSHOT.jar release\ps3rpc.jar
