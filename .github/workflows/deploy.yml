@@ -3,7 +3,7 @@ name: Deploy Release
 on:
   push:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+      - '*.*.*'
 
 jobs:
   build:
@@ -16,35 +16,35 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
-      - name: Build shadowJar
-        run: ./gradlew shadowJar
+      - name: Grant execute permissions
+        run: icacls gradlew /grant Everyone:F
 
-      - name: Rename JAR
-        run: Rename-Item "build\libs\ps3rpc-1.0-SNAPSHOT.jar" "ps3rpc.jar"
+      - name: Build ShadowJar
+        run: .\gradlew.bat shadowJar
 
-      - name: Download Launch4j
+      - name: Install Launch4j via Chocolatey
+        shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://downloads.sourceforge.net/project/launch4j/launch4j-3/3.14/launch4j-3.14-win32.zip" -OutFile launch4j.zip
-          Expand-Archive launch4j.zip -DestinationPath launch4j
+          choco install launch4j --version=3.14.0 -y
 
-      - name: Create EXE with Launch4j
-        run: |
-          .\launch4j\launch4j\launch4j.exe config\launch4j.xml
+      - name: Package EXE with Launch4j
+        shell: pwsh
+        run: launch4j config\launch4j.xml
 
       - name: Prepare Release Assets
         run: |
-          mkdir release
-          Move-Item ps3rpc.jar release\
-          Move-Item ps3rpc.exe release\
+          if (-Not (Test-Path release)) { New-Item -ItemType Directory -Path release }
+          Move-Item build\libs\ps3rpc-1.0-SNAPSHOT.jar release\ps3rpc.jar
+          Move-Item ps3rpc.exe release\ps3rpc.exe
 
-      - name: Upload Release Assets
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           files: |
             release/ps3rpc.jar
             release/ps3rpc.exe
