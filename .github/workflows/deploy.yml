@@ -1,0 +1,52 @@
+name: Deploy Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build shadowJar
+        run: ./gradlew shadowJar
+
+      - name: Rename JAR
+        run: Rename-Item "build\libs\ps3rpc-1.0-SNAPSHOT.jar" "ps3rpc.jar"
+
+      - name: Download Launch4j
+        run: |
+          Invoke-WebRequest -Uri "https://downloads.sourceforge.net/project/launch4j/launch4j-3/3.14/launch4j-3.14-win32.zip" -OutFile launch4j.zip
+          Expand-Archive launch4j.zip -DestinationPath launch4j
+
+      - name: Create EXE with Launch4j
+        run: |
+          .\launch4j\launch4j\launch4j.exe config\launch4j.xml
+
+      - name: Prepare Release Assets
+        run: |
+          mkdir release
+          Move-Item ps3rpc.jar release\
+          Move-Item ps3rpc.exe release\
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: |
+            release/ps3rpc.jar
+            release/ps3rpc.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
