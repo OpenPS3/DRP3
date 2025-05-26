@@ -11,7 +11,7 @@ class ActivityBuilder(val instance: DRP3Instance) {
 
     fun buildInactiveActivity(core: Core) {
         Activity().use { activity ->
-            activity.details = "PlayStation®3 not connected."
+            activity.details = "Waiting PlayStation®3."
             activity.state = webmanUtils.thermalData
             activity.timestamps().start = Instant.now()
             activity.assets().largeImage = "default_image_key"
