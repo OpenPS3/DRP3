@@ -1,17 +1,17 @@
-package net.ps3utils.discord.rpc
+package net.openps3.drp3
 
-import RPCInstance
 import kotlinx.io.IOException
 import kotlinx.serialization.ExperimentalSerializationApi
-import net.ps3utils.discord.rpc.utils.copyFromJar
 import java.io.File
 import java.util.Scanner
 import kotlin.system.exitProcess
 import kotlinx.serialization.hocon.Hocon
-import net.ps3utils.discord.rpc.utils.HoconUtils.decodeFromString
-import net.ps3utils.discord.rpc.utils.common.ConfigFile
+import net.openps3.drp3.utils.HoconUtils.decodeFromString
+import net.openps3.drp3.utils.common.ConfigFile
+import net.openps3.drp3.utils.copyFromJar
 
-object RPCLauncher {
+
+object DRP3Launcher {
     @OptIn(ExperimentalSerializationApi::class)
     val HOCON = Hocon { useArrayPolymorphism = true }
 
@@ -20,7 +20,7 @@ object RPCLauncher {
         val configFile = checkConfigFile()
         val config = readConfigFile<ConfigFile>(configFile)
 
-        RPCInstance(config.consoleIp, config).start(config.clientId.toLong())
+        DRP3Instance(config.consoleIp, config).start(config.clientId.toLong())
     }
 
     private fun checkConfigFile(): File {

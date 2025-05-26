@@ -1,10 +1,12 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.serialization") version "2.1.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "net.ps3utils"
+group = "net.openps3"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -41,13 +43,13 @@ tasks.test {
 }
 
 tasks {
-    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-        archiveBaseName.set("ps3-discord-rpc")
+    named<ShadowJar>("shadowJar") {
+        archiveBaseName.set("ps3rpc")
         archiveClassifier.set("")
 
         manifest {
             attributes(
-                "Main-Class" to "net.ps3utils.discord.rpc.RPCLauncher"
+                "Main-Class" to "net.openps3.drp3.DRP3Launcher"
             )
         }
     }

@@ -1,13 +1,15 @@
+package net.openps3.drp3
+
 import de.jcm.discordgamesdk.Core
 import de.jcm.discordgamesdk.CreateParams
 import de.jcm.discordgamesdk.LogLevel
 import mu.KotlinLogging
-import net.ps3utils.discord.rpc.presence.DiscordUtils
-import net.ps3utils.discord.rpc.utils.common.ConfigFile
-import net.ps3utils.discord.rpc.utils.ps3.webman.WebmanUtils
+import net.openps3.drp3.presence.DiscordUtils
+import net.openps3.drp3.utils.common.ConfigFile
+import net.openps3.drp3.utils.ps3.webman.WebmanUtils
 import kotlin.use
 
-class RPCInstance(ip: String, val config: ConfigFile) {
+class DRP3Instance(ip: String, val config: ConfigFile) {
     val webmanUtils = WebmanUtils(ip)
     val logger = KotlinLogging.logger {  }
     val presence = DiscordUtils(this)

@@ -1,12 +1,12 @@
-package net.ps3utils.discord.rpc.presence
+package net.openps3.drp3.presence
 
-import RPCInstance
 import de.jcm.discordgamesdk.Core
 import de.jcm.discordgamesdk.activity.Activity
-import net.ps3utils.discord.rpc.utils.ImageUtils.getGameTDBImage
+import net.openps3.drp3.DRP3Instance
+import net.openps3.drp3.utils.ImageUtils.getGameTDBImage
 import java.time.Instant
 
-class ActivityBuilder(val instance: RPCInstance) {
+class ActivityBuilder(val instance: DRP3Instance) {
     val webmanUtils = instance.webmanUtils
 
     fun buildInactiveActivity(core: Core) {
@@ -21,7 +21,7 @@ class ActivityBuilder(val instance: RPCInstance) {
     }
 
     fun buildActivity(core: Core) {
-        val activityDetails = if (webmanUtils.gameName.isNullOrBlank()) "On XMB" else "Playing ${webmanUtils.gameName}"
+        val activityDetails = if (webmanUtils.gameName.isNullOrBlank()) "On XMB™" else "Playing ${webmanUtils.gameName}"
 
         if (activityDetails != instance.lastActivity || webmanUtils.titleID != instance.lastTitleID) {
             instance.lastActivity = activityDetails

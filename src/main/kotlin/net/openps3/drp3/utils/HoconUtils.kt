@@ -1,4 +1,4 @@
-package net.ps3utils.discord.rpc.utils
+package net.openps3.drp3.utils
 
 import com.typesafe.config.ConfigFactory
 import kotlinx.serialization.ExperimentalSerializationApi

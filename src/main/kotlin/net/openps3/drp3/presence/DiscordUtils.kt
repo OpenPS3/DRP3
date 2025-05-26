@@ -1,9 +1,9 @@
-package net.ps3utils.discord.rpc.presence
+package net.openps3.drp3.presence
 
-import RPCInstance
 import de.jcm.discordgamesdk.Core
+import net.openps3.drp3.DRP3Instance
 
-class DiscordUtils(val instance: RPCInstance) {
+class DiscordUtils(val instance: DRP3Instance) {
     val webmanUtils = instance.webmanUtils
     val activityBuilder = ActivityBuilder(instance)
 

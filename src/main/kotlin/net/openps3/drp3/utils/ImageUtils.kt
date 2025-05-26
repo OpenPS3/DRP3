@@ -1,4 +1,4 @@
-package net.ps3utils.discord.rpc.utils
+package net.openps3.drp3.utils
 
 import mu.KotlinLogging
 import java.net.HttpURLConnection

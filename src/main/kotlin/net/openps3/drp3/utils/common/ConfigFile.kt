@@ -1,4 +1,4 @@
-package net.ps3utils.discord.rpc.utils.common
+package net.openps3.drp3.utils.common
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

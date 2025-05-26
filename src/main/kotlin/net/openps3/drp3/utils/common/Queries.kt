@@ -1,4 +1,4 @@
-package net.ps3utils.discord.rpc.utils.common
+package net.openps3.drp3.utils.common
 
 object Queries {
     const val DIRECTORIES_REGEX = "a[href~=/dev_hdd0|/dev_usb00[0-9]/(PSXISO|PS2ISO)]"
