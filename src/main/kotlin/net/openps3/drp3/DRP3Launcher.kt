@@ -31,7 +31,7 @@ object DRP3Launcher {
                 """                            
                Welcome to Discord Rich Presence for PlayStation® 3!
 
-                What's your PlayStation® 3 IP address?
+                Insert your PlayStation® 3 IP address?
                 To find your PlayStation® 3 IP address
                 Navigate to Settings > Network Settings > Internet Connection Test and then check the "Connection Status" for the IP address.
 """
