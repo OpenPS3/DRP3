@@ -24,7 +24,7 @@ object RPCLauncher {
     }
 
     private fun checkConfigFile(): File {
-        val configFile = File(System.getProperty("conf") ?: "foxy.conf")
+        val configFile = File(System.getProperty("conf") ?: "settings.conf")
 
         if (!configFile.exists()) {
             println(

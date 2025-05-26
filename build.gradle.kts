@@ -47,7 +47,7 @@ tasks {
 
         manifest {
             attributes(
-                "Main-Class" to "net.ps3utils.discord.rpc.RPCLauncherKt"
+                "Main-Class" to "net.ps3utils.discord.rpc.RPCLauncher"
             )
         }
     }
