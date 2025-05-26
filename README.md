@@ -29,3 +29,6 @@ To run the JAR file, open your console and execute:
 `java -jar path/to/ps3rpc.jar`
 
 The EXE version was created using the launch4j plugin to simplify execution.
+
+## Special greetings
+❤ - [zorua98741](https://github.com/zorua98741), the creator of [PS3-Rich-Presence-for-Discord](https://github.com/zorua98741/PS3-Rich-Presence-for-Discord), the project that made me want to create this version in Kotlin.
