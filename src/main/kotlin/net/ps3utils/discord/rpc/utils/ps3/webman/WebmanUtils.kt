@@ -1,9 +1,14 @@
-package net.ps3utils.discord.rpc.utils
+package net.ps3utils.discord.rpc.utils.ps3.webman
 
 import mu.KotlinLogging
+import net.ps3utils.discord.rpc.utils.ps3.GameUtils
+import net.ps3utils.discord.rpc.utils.ps3.GatherDetails
+import net.ps3utils.discord.rpc.utils.ps3.SystemUtils
 
-class WebmanUtils(val ip: String) {
+class WebmanUtils(ip: String) {
     private val gatherDetails = GatherDetails(ip)
+    private val systemUtils = SystemUtils(gatherDetails)
+    private val gameUtils = GameUtils(gatherDetails)
     private val logger = KotlinLogging.logger {  }
 
     var thermalData: String? = null
@@ -19,17 +24,18 @@ class WebmanUtils(val ip: String) {
 
     fun fetchDetails(): Boolean {
         if (!gatherDetails.getHtml()) {
-            logger.error {"Can't get PS3 Home page, is WebmanMOD installed?"}
+            logger.error {"Can't get PlayStation® 3 Home page, is WebmanMOD installed?"}
             thermalData = null
             gameName = null
             titleID = null
             isRetroGame = false
-            currentActivity = null
+            currentActivity = "PlayStation®3 not connected"
+
             return false
         }
 
-        gatherDetails.getThermals()
-        gatherDetails.decideGameType()
+        systemUtils.getThermals()
+        gameUtils.decideGameType()
 
         thermalData = gatherDetails.thermalData
 
@@ -37,7 +43,7 @@ class WebmanUtils(val ip: String) {
         titleID = gatherDetails.titleID
         isRetroGame = gatherDetails.isRetroGame
 
-        currentActivity = gameName?.let { "Playing $it" } ?: "Disconnected from PlayStation 3"
+        currentActivity = gameName?.let { "Playing $it" } ?: "Disconnected from PlayStation® 3"
 
         return true
     }

@@ -25,7 +25,7 @@ object ImageUtils {
         val regionKey = titleID[2]
         val region = regionMap[regionKey]
         if (region == null) {
-            logger.warn { "Unexpected key: $regionKey ! Falling back to Discord dev app images" }
+            logger.warn { "Unexpected key: $regionKey! Using default icons" }
             return titleID.lowercase()
         }
 
