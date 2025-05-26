@@ -13,12 +13,11 @@ class PS3InfoFetcher(private val ip: String) {
     var lastTitleID: String? = null
     var lastActivity: String? = null
 
-    fun startLoopWithDiscord(clientId: Long) {
+    fun start(clientId: Long) {
         CreateParams().use { params ->
             params.setClientID(clientId)
             params.setFlags(CreateParams.getDefaultFlags())
             Core(params).use { core ->
-
                 while (true) {
                     presence.checkActivity(core)
                     core.runCallbacks()

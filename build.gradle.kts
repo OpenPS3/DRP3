@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.20"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "net.ps3utils"
@@ -26,6 +27,20 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks {
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveBaseName.set("ps3-discord-rpc")
+        archiveClassifier.set("")
+
+        manifest {
+            attributes(
+                "Main-Class" to "net.ps3utils.discord.rpc.RPCLauncherKt"
+            )
+        }
+    }
+}
+
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(17)
 }
