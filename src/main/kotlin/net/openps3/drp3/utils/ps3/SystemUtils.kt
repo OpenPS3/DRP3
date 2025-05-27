@@ -1,14 +1,14 @@
 package net.openps3.drp3.utils.ps3
 
 import mu.KotlinLogging
-import net.openps3.drp3.utils.common.Queries
+import net.openps3.drp3.utils.common.Constants
 import java.util.regex.Pattern
 
 class SystemUtils(private val dataLoader: PSDataLoader) {
     private val logger = KotlinLogging.logger {  }
 
     fun getPS3Details() {
-        val titleLink = dataLoader.document?.selectFirst(Queries.TARGET_BLANK)
+        val titleLink = dataLoader.document?.selectFirst(Constants.TARGET_BLANK)
         val nameElement = titleLink?.nextElementSibling()
 
         if (titleLink == null || nameElement == null) {
@@ -30,7 +30,7 @@ class SystemUtils(private val dataLoader: PSDataLoader) {
     }
 
     fun getThermals() {
-        val thermalSection = dataLoader.document?.selectFirst(Queries.CPU_RSX_PAGE)?.toString() ?: run {
+        val thermalSection = dataLoader.document?.selectFirst(Constants.CPU_RSX_PAGE)?.toString() ?: run {
             logger.info { "Can't get temperature info" }
             return
         }
