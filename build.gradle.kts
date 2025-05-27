@@ -1,9 +1,12 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import edu.sc.seis.launch4j.tasks.DefaultLaunch4jTask
+import org.gradle.kotlin.dsl.launch4j
 
 plugins {
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.serialization") version "2.1.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("edu.sc.seis.launch4j") version "3.0.6"
 }
 
 group = "net.openps3"
@@ -53,6 +56,24 @@ tasks {
             )
         }
     }
+}
+
+launch4j {
+    outfile = "ps3rpc.exe"
+    mainClassName = "net.openps3.drp3.DRP3Launcher"
+
+}
+
+tasks.withType<DefaultLaunch4jTask> {
+    dependsOn("shadowJar")
+
+    outfile.set("ps3rpc.exe")
+    mainClassName.set("net.openps3.drp3.DRP3Launcher")
+    productName.set("Discord Rich Presence for PlayStation 3")
+    setJarFiles(files(tasks.named<ShadowJar>("shadowJar").flatMap { it.archiveFile }))
+    jreMinVersion.set("17")
+    dontWrapJar.set(false)
+    headerType.set("console")
 }
 
 kotlin {
