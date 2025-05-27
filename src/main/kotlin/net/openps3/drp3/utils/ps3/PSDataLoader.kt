@@ -15,10 +15,29 @@ class PSDataLoader(val ip: String) {
     var name: String? = null
     var titleID: String? = null
     var isRetroGame: Boolean = false
+    var isConnected: Boolean = false
 
     private val client = HttpClient(CIO)
 
+    suspend fun pingConsole(): Boolean {
+        // Sends a notification followed by beep to XMB
+        val url = "http://$ip/notify.ps3mapi?msg=Connected+to+Discord&icon=0&snd=1"
+
+        return try {
+            client.get(url)
+            true
+        } catch (e: Exception) {
+            println("Error while sending message to PS3, skipping.")
+            false
+        }
+    }
+
     fun getHtml(): Boolean = runBlocking {
+        if (!isConnected) {
+            pingConsole()
+            isConnected = true
+        }
+
         val url = "http://$ip/cpursx.ps3?/sman.ps3"
 
         return@runBlocking try {
