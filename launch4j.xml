@@ -24,5 +24,4 @@
     </singleInstance>
     <stayAlive>false</stayAlive>
     <restartOnCrash>false</restartOnCrash>
-    <launchTimeout>5000</launchTimeout>
 </launch4jConfig>
