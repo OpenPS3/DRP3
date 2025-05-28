@@ -4,7 +4,7 @@
 
 ## Requirements
 - Computer & PlayStation® 3 on the same network  
-- Firmware: any version that runs webMAN MOD
+- Any firmware that runs webMAN MOD (works with PS3HEN)
 - webMAN MOD (Tested on 1.47.45)
 - Java 17+ (Java 21 Recommended)
 
