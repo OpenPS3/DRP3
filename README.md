@@ -3,10 +3,10 @@
 <h2 align="center">Show what you're playing on your PlayStation® 3 on Discord</h2>
 
 ## Requirements
-- PlayStation® 3 on the same network  
-- Firmware: HFW/HEN or CFW  
-- webMAN MOD version 1.47.45  
-- Java 17+
+- Computer & PlayStation® 3 on the same network  
+- Firmware: any version that runs webMAN MOD
+- webMAN MOD (Tested on 1.47.45)
+- Java 17+ (Java 21 Recommended)
 
 ## Warnings
 - This program relies on webMAN MOD — major updates may break compatibility  
