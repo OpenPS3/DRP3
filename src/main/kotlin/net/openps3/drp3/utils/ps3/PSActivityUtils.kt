@@ -7,11 +7,8 @@ class PSActivityUtils(private val dataLoader: PSDataLoader) {
         dataLoader.isRetroGame = false
         if (dataLoader.document?.selectFirst(Constants.TARGET_BLANK) != null) {
             dataLoader.systemUtils.getPS3Details()
-        }
-        else if (dataLoader.document?.selectFirst(Constants.DIRECTORIES_REGEX) != null) {
-            dataLoader.isRetroGame = true
         } else {
-            dataLoader.name = "XMB™"
+            dataLoader.name = null
             dataLoader.titleID = null
         }
     }

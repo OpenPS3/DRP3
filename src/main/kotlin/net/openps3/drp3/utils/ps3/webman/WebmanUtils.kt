@@ -24,7 +24,7 @@ class WebmanUtils(ip: String) {
 
     fun fetchDetails(): Boolean {
         if (!dataLoader.getHtml()) {
-            logger.error { "Can't get PlayStation® 3 Home page, is WebmanMOD installed?" }
+            logger.error { "Can't get PlayStation®3 Home page, is WebmanMOD installed?" }
             thermalData = null
             gameName = null
             titleID = null

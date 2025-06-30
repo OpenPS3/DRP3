@@ -28,34 +28,31 @@ class ActivityBuilder(val instance: DRP3Instance) {
             instance.lastActivity = activityDetails
             instance.lastTitleID = webmanUtils.titleID
 
+            val titleData = mapOf(
+                Constants.PLAYSTATION_STORE_ID to Triple("Looking at PlayStation® Store", Constants.PS_STORE_LOGO_KEY, "PlayStation® Store"),
+                Constants.PSTVPLUS_ID to Triple("Watching PlayStation®TV Plus", Constants.PSTVPLUS_LOGO_KEY, "PlayStation®TV Plus"),
+                Constants.YOUTUBE_ID to Triple("Watching YouTube", Constants.YOUTUBE_LOGO_KEY, "YouTube")
+            )
+
             Activity().use { activity ->
-                if (webmanUtils.titleID == Constants.PLAYSTATION_STORE_ID) {
-                    activity.details = "Looking at PlayStation® Store"
-                    activity.state = if (instance.config.showTemp) webmanUtils.thermalData else webmanUtils.titleID
-                    activity.timestamps().start = Instant.now()
-                    activity.assets().largeImage = Constants.PS_STORE_LOGO_KEY
-                    activity.assets().largeText = "PlayStation® Store"
+                val data = titleData[webmanUtils.titleID]
+                val isSpecial = data != null
 
-                    core.activityManager().updateActivity(activity)
-                    return
-                }
-
-                activity.details = activityDetails
+                activity.details = data?.first ?: activityDetails
                 activity.state = if (instance.config.showTemp) webmanUtils.thermalData else webmanUtils.titleID
                 activity.timestamps().start = Instant.now()
 
-                if (instance.config.showCover) {
-                    activity.assets().largeImage = if (webmanUtils.gameName.isNullOrBlank()) {
-                        Constants.DEFAULT_IMAGE_KEY
-                    } else {
-                        webmanUtils.titleID?.let { getGameTDBImage(it) } ?: Constants.DEFAULT_IMAGE_KEY
-                    }
+                activity.assets().largeImage = when {
+                    data != null -> data.second
+                    instance.config.showCover -> webmanUtils.titleID?.let { getGameTDBImage(it) } ?: Constants.DEFAULT_IMAGE_KEY
+                    else -> Constants.DEFAULT_IMAGE_KEY
+                }
 
-                } else activity.assets().largeImage = Constants.DEFAULT_IMAGE_KEY
-
-                    activity.assets().largeText = webmanUtils.titleID ?: "Unknown ID"
+                activity.assets().largeText = data?.third ?: (webmanUtils.titleID ?: "Unknown ID")
 
                 core.activityManager().updateActivity(activity)
+
+                if (isSpecial) return
             }
         }
     }
